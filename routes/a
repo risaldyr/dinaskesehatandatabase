@@ -1,5 +1,4 @@
 <?php
-
 use illuminate\support\Str;
 /*
 |--------------------------------------------------------------------------
@@ -12,38 +11,45 @@ use illuminate\support\Str;
 |
 */
 
-$router->get('/key', function () {
+$router->get('/key', function (){
     return Str::random(60);
 });
 
-$router->get('/nyoba', function () {
+$router->get('/nyoba', function(){
 
     $data = Str::of('foo bar baz')->explode(' ');
 
     return response()->json($data);
 });
-
-$router->group(['prefix' => 'api'], function () use ($router) {
-    $router->post('/register', 'UserController@register');
-    // Matches "/api/login
+$router->post('/register', 'UserController@register');
+$router->group(['prefix' => 'api', 'middleware' => 'auth'], function () use ($router) {
+     // Matches "/api/login
     $router->post('/login', 'AuthController@login');
-});
-$router->group(['middleware' => ['auth', 'role:admin']], function () use ($router) {
-    $router->get('/users', 'UserController@allshow');
-
+    $router->get('/user', 'UserController@allshow');
     $router->get('/user/{id}', 'UserController@oneshow');
-
     $router->get('/task', 'TaskController@showAllTask');
     $router->get('/user/{id}/task', 'TaskController@showTaskUser');
 });
+$router->get('/fail', function(){
+    return 'gagal login';
+});
+$router->group(['prefix' => 'api', 'middleware' => 'auth'], function () use ($router) {
+    // Matches "/api/login
+   $router->post('/login', 'AuthController@login');
+   $router->post('/user/{id}/createtask', 'TaskController@createTask');
+});
+$router->post('register', 'AuthController@register');
 
-$router->group(['middleware' => ['auth', 'rolemember:user']], function () use ($router) {
 
-    $router->post('/user/{id}/createtask', 'TaskController@createTask');
 
-    });
+
+
+$router->post('/user/{id}/createtask', 'TaskController@createTask');
+
 
 
 $router->get('/absent', 'PresentController@index');
 
 $router->post('/absent/checkin', 'PresentController@checkIn');
+
+
