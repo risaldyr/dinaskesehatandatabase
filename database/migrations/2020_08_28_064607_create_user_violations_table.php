@@ -18,7 +18,8 @@ class CreateUserViolationsTable extends Migration
             $table->unsignedBigInteger('user_id');
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->dateTime('violation_at')->nullable();
-            $table->text('note');
+            $table->enum('keterangan', ['on', 'off'] );
+            $table->text('note')->nullable();
             $table->timestamps();
         });
     }

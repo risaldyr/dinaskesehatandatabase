@@ -17,46 +17,34 @@ class UserController extends Controller
             'no_telepon'=>'required',
             'tgl_lahir'=>'required',
             'instansi'=>'required',
-            'role'=>'in:admin,house,user',
             'nama_mentor'=>'required'
         ]);
 
-        $username = $request->input('username');
-        $password = Hash::make($request->input('password'));
-        $nama = $request->input('nama');
-        $jenis_kelamin = $request->input('jenis_kelamin');
-        $alamat = $request->input('alamat');
-        $no_telepon = $request->input('no_telepon');
-        $tgl_lahir = $request->input('tgl_lahir');
-        $instansi = $request->input('instansi');
-        $role = $request->input('role');
-        $nama_mentor = $request->input('nama_mentor');
+        $user = new User();
+        $user->username = $request->username;
+        $user->password = Hash::make($request->password);
+        $user->nama = $request->nama;
+        $user->jenis_kelamin = $request->jenis_kelamin;
+        $user->alamat = $request->alamat;
+        $user->no_telepon = $request->no_telepon;
+        $user->tgl_lahir = $request->tgl_lahir;
+        $user->instansi = $request->instansi;
+        $user->role = 'user';
+        $user->nama_mentor = $request->nama_mentor;
 
-        $register = User::create([
-            'username'=>$username,
-            'password'=>$password,
-            'nama'=>$nama,
-            'jenis_kelamin'=>$jenis_kelamin,
-            'alamat'=>$alamat,
-            'no_telepon'=>$no_telepon,
-            'tgl_lahir'=>$tgl_lahir,
-            'instansi'=>$instansi,
-            'role'=>$role,
-            'nama_mentor'=>$nama_mentor
-        ]);
-            if($register){
-                return response()->json([
-                    'success' => true,
-                    'message' => 'Registrasi Berhasil!',
-                    'data' => $register
-                ], 201);
-            } else {
-                return response()->json([
-                    'success' => false,
-                    'message' => 'Registrasi Gagal!',
-                    'data' => $register
-                ], 404);
-            }
+        if($user->save()){
+            return response()->json([
+                'success' => true,
+                'message' => 'Registrasi Berhasil!',
+                'data' => $user
+            ], 201);
+        } else {
+            return response()->json([
+                'success' => false,
+                'message' => 'Registrasi Gagal!',
+                'data' => $user
+            ], 404);
+        }
 
     }
 

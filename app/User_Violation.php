@@ -9,8 +9,9 @@ use Illuminate\Database\Eloquent\Model;
 
 class User_Violation extends Model
 {
+    protected $table = 'user_violations';
     protected $fillable = [
-        'user_id', 'note'
+        'user_id', 'note', 'keterangan'
     ];
 
     public function user()

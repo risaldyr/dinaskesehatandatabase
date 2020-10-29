@@ -3,6 +3,7 @@
 namespace App\Http\Middleware;
 
 use Closure;
+use Illuminate\Support\Facades\Auth;
 
 
 class RoleMember
@@ -14,11 +15,13 @@ class RoleMember
      * @param  \Closure  $next
      * @return mixed
      */
-    public function handle($request, Closure $next)
+    public function handle($request, Closure $next, ...$roles)
     {
-        if ($request->user() && $request->user()->role != 'user') {
-            return response('Unauthorized.', 401);
+        foreach($roles as $role){
+            if(Auth::user()->role == $role){
+                return $next($request);
+            }
         }
-        return $next($request);
+        return response('Unauthorized', 401);
     }
 }

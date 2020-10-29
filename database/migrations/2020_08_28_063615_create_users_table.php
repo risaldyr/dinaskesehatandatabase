@@ -23,7 +23,7 @@ class CreateUsersTable extends Migration
             $table->bigInteger('no_telepon');
             $table->string('tgl_lahir');
             $table->string('instansi');
-            $table->enum('role', ['admin', 'house', 'user']);
+            $table->enum('role', ['user', 'admin', 'host']);
             $table->string('nama_mentor');
             $table->dateTime('verified_at')->nullable();
             $table->timestamps();

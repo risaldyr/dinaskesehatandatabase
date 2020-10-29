@@ -17,8 +17,8 @@ class CreateUserPresencesTable extends Migration
             $table->id();
             $table->unsignedBigInteger('user_id');
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
-            $table->enum('type', ['checkin', 'checkout']);
-
+            $table->datetime('checkin')->nullable();
+            $table->datetime('checkout')->nullable();
         });
     }
 

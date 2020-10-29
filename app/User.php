@@ -14,7 +14,7 @@ use Tymon\JWTAuth\Contracts\JWTSubject;
 class User extends Model implements  AuthenticatableContract, AuthorizableContract, JWTSubject
 {
     use Authenticatable, Authorizable;
-    
+
     /**
      * The attributes that are mass assignable.
      *
@@ -63,15 +63,15 @@ class User extends Model implements  AuthenticatableContract, AuthorizableContra
     {
         return $this->hasOne(Remember_Token::class);
     }
-    public function user_presences()
+    public function presences()
     {
         return $this->hasMany(User_Presence::class);
     }
-    public function user_tasks()
+    public function tasks()
     {
         return $this->hasMany(User_Task::class);
     }
-    public function user_Violations()
+    public function violations()
     {
         return $this->hasMany(User_Violation::class);
     }

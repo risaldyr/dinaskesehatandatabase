@@ -3,8 +3,9 @@
 namespace App\Http\Controllers;
 use App\User;
 use App\User_Task;
-use Illuminate\Auth\Events\Validated;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Auth\Events\Validated;
 
 class TaskController extends Controller
 {
@@ -13,9 +14,9 @@ class TaskController extends Controller
         return response()->json(User_Task::all());
     }
 
-    public function createTask($id, Request $request)
+    public function createTask(Request $request)
     {
-        $user = User::find($id);
+        $user = Auth::user();
 
         $this->validate($request, [
             'task' => 'required'

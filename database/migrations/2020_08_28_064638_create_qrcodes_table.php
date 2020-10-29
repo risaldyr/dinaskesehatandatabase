@@ -17,7 +17,7 @@ class CreateQrcodesTable extends Migration
             $table->id();
             $table->string('code');
             $table->boolean('used')->default(0);
-            $table->time('valid_till');
+            $table->datetime('valid_till');
             $table->timestamps();
         });
     }

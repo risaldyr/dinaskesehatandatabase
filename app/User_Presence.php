@@ -12,7 +12,7 @@ class User_Presence extends Model
     public $timestamps = false;
     public $table = 'user_presences';
     protected $fillable = [
-        'user_id', 'type'
+        'user_id', 'checkin', 'checkout', 'tanggal'
     ];
 
     public function user()
