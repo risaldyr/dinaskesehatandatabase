@@ -107,19 +107,27 @@ class PresentController extends Controller
 
 
         //mengambil data user
+        // $id = $user->id;
+        // $presence = User_Presence::where('user_id', $id)->first();
+        // $presence->id =
 
-        $idUser = $user->id;
-        $idPresence = $user->presences->last()->id;
-        $presence = User_Presence::where([
-            ['user_id', $idUser],
-            ['id', $idPresence]
-        ])->first();
+        $id = $user->id;
+        $presences = User_Presence::where('user_id', $id)->first();
+        if ($presences) {
+
+            $presence = User_Presence::latest();
+
+            $presence->checkout = Carbon::now();
+            if ($presence->save()) {
+                // Mantab
+                return response()->json('Berhasil', 202);
+            }
+        }
 
 
+        //check checkin waktu
 
-        //mengubah checkout
-
-        $presence->checkout = Carbon::now();
+        // $presence->checkout = Carbon::now();
 
 
         // Change Qrcode Use to TRUE
@@ -127,10 +135,10 @@ class PresentController extends Controller
         // $qrcode->save();
 
         // Success
-        if ($presence->save()) {
-            // Mantab
-            return response()->json('Berhasil', 202);
-        }
+        // if ($presence->save()) {
+        //     // Mantab
+        //     return response()->json('Berhasil', 202);
+        // }
     }
 
     //melihat absen peruser

@@ -35,7 +35,7 @@ class TaskController extends Controller
     {
         $user =User::find($id);
 
-        $shows = $user->user_tasks()->get();
+        $shows = $user->tasks()->get();
 
         foreach($shows as $show){
             $data[] = [

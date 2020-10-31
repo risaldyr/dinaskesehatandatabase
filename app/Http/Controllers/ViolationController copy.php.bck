@@ -1,0 +1,58 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use App\User;
+use App\User_Violation;
+use Illuminate\Http\Request;
+
+
+class ViolationController extends Controller
+{
+    public function violationOff(Request $request, $id)
+    {
+        //mencari id
+        $user = User::find($id);
+
+
+        //mengambil data user
+        $violations = $user->violations;
+        if ($user->violations->count() >= 0 && $user->violations->last()->keterangan == 'on') {
+            $userId = $user;
+            $violations = User_Violation::where('user_id', $userId)->first();
+            $violations->keterangan = 'off';
+            $violations->note = $request->note;
+
+            if ($violations->save()) {
+                // selesai
+                return response()->json('Berhasil', 202);
+            }
+
+
+
+            // if($user->violations->count() >= 0 && $user->violations->last()->keterangan == 'on'){
+            //     $userId = $user;
+            //     $violations = User_Violation::where('user_id', $userId)->first();
+            //     $violations->keterangan = 'off';
+            //     $violations->note = $request->note;
+
+            //     if ($violations->save()) {
+            //             // selesai
+            //             return response()->json('Berhasil', 202);
+            //         }
+
+
+        }
+
+        // mengganti on to off
+        // $violation->keterangan = 'off';
+        // $violation->note = $request->note;
+
+        // if ($violation->save()) {
+        //     // selesai
+        //     return response()->json('Berhasil', 202);
+        // }
+    }
+
+
+}
