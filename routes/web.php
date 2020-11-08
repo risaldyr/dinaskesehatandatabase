@@ -17,7 +17,7 @@ $router->get('/key', function () {
     return Str::random(60);
 });
 
-
+//Regist and login
 $router->group(['prefix' => 'api'], function () use ($router) {
     $router->post('/register', 'UserController@register');
     // Matches "/api/login
@@ -30,15 +30,15 @@ $router->group(['middleware' => ['auth', 'role:admin']], function () use ($route
     $router->get('/users', 'UserController@allshow');
     $router->get('/user/{id}', 'UserController@oneshow');
     $router->get('/user/{id}/task', 'TaskController@showTaskUser');
-    $router->get('/task', 'TaskController@showAllTask');
+
     $router->get('/user/absent/{id}', 'PresentController@listPresentUser');
+    $router->get('/presences', 'PresentController@index');
     $router->patch('/user/violation/{id}', 'ViolationController@violationOff');
-});
-
-
-
     $router->get('/violation', 'ViolationController@showAllViolation');
     $router->get('/violation/{id}', 'ViolationController@showViolationsUser');
+});
+$router->get('/task', 'TaskController@showAllTask');
+
 
 
 // User Route
@@ -49,6 +49,8 @@ $router->group(['middleware' => ['auth', 'rolemember:user']], function () use ($
     $router->patch('/absent/checkout', 'PresentController@checkout');
 });
 
+
+// host route
 $router->group(['middleware' => ['auth', 'rolemember:host']], function () use ($router) {
     $router->get('/qrcode', 'HostController@showQrcode');
 });

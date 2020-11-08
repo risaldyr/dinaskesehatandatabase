@@ -11,7 +11,8 @@ class TaskController extends Controller
 {
     public function showAllTask()
     {
-        return response()->json(User_Task::all());
+        $tasks = User::with(['tasks'])->get();
+        return response()->json($tasks);
     }
 
     public function createTask(Request $request)

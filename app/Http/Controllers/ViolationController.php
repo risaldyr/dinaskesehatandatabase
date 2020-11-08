@@ -34,7 +34,8 @@ class ViolationController extends Controller
 
     public function showAllViolation()
     {
-        return response()->json(User_violation::all());
+        $violation = User::with(['violations'])->get();
+        return response()->json($violation);
     }
     public function showViolationsUser($id)
     {

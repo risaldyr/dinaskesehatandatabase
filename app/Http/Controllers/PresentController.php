@@ -14,10 +14,15 @@ class PresentController extends Controller
 {
 
     //melihat daftar absen
-    public function index($token)
+    public function index()
     {
-        $show = User_Presence::all();
-        return response()->json();
+        $present = User::with(['presences'])->get();
+
+        return response()->json($present);
+        // dd($user);
+
+
+
     }
 
     //checkin user
@@ -151,52 +156,4 @@ class PresentController extends Controller
         return response()->json($data);
     }
 
-    //melihat absen hari
-    public function listPresentDay($token)
-    {
-        /**
-         * 1. $admin harus mendapatkan token
-         * 2. true mendapatkan list harian absen(yang berisi absen user dihari tertentu)
-         *  false 'blm mendapatkan token'
-         */
-    }
-
-    //melihat absen minggu
-    public function listPresentWeek($token)
-    {
-        /**
-         * 1. $admin harus mendapatkan token
-         * 2. true mendapatkan list mingguan absen(yang berisi absen user dihari tertentu)
-         *  false 'blm mendapatkan token'
-         */
-    }
-
-    //melihat absen bulan
-    public function listPresentMonth($token)
-    {
-        /**
-         * 1. $admin harus mendapatkan token
-         * 2. true mendapatkan list bulanan absen (yang berisi absen user dihari tertentu)
-         *  false 'blm mendapatkan token'
-         */
-    }
-
-    //alasan tidak absen
-    public function userViolationAbsent($token)
-    {
-        /**
-         * 1. $admin harus mendapatkan token
-         * 2. user tidak absen di qrcode
-         * 3. true admin dapat menulis note kesalahan yang dilakukan
-         * false 'blm mendapatkan token' / 'absen memenuhi'
-         */
-    }
-
-    //melihat daftar kesalahan disatu user
-    public function userViolation($id)
-    {
-        /**
-         * 1. $admin harus mendapatkan token
-         */
-    }
 }
