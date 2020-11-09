@@ -16,7 +16,7 @@ class HostController extends Controller
 
         $qrcode = new Qrcode();
         $qrcode->code = $code;
-        $qrcode->valid_till = Carbon::now()->addSeconds(20);
+        $qrcode->valid_till = Carbon::now()->addSeconds(7);
         $qrcode->save();
 
         return $qrcode->code;

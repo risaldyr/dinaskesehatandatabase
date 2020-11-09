@@ -16,11 +16,12 @@ class PresentController extends Controller
     //melihat daftar absen
     public function index()
     {
-        $present = User::with(['presences'])->get();
+        // $present = User::with(['presences'])->get();
 
-        return response()->json($present);
+        // return response()->json($present);
         // dd($user);
 
+        return response()->json(User_Presence::all());
 
 
     }
