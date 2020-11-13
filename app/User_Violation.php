@@ -11,7 +11,7 @@ class User_Violation extends Model
 {
     protected $table = 'user_violations';
     protected $fillable = [
-        'user_id', 'note', 'keterangan'
+        'user_id', 'note', 'keterangan', 'nama'
     ];
 
     public function user()

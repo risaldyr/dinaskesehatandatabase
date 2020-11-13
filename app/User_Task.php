@@ -12,7 +12,7 @@ class User_Task extends Model
     public $table = 'user_tasks';
 
     protected $fillable = [
-        'user_id', 'task'
+        'user_id', 'task', 'nama'
     ];
 
     public function user()

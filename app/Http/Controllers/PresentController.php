@@ -16,12 +16,12 @@ class PresentController extends Controller
     //melihat daftar absen
     public function index()
     {
-        $present = User::with(['presences'])->get();
+        // $present = User::with(['presences'])->get();
 
-        return response()->json($present);
+        // return response()->json($present);
         // dd($user);
 
-        // return response()->json(User_Presence::all());
+        return response()->json(User_Presence::all());
 
 
     }
@@ -56,6 +56,7 @@ class PresentController extends Controller
         if ($user->presences->count() > 0 && $user->presences->last()->checkout == null) {
             $violation = new User_Violation();
             $violation->user_id = $user->id;
+            $violation->nama = $user->nama;
             $violation->violation_at = $user->presences->last()->created_at;
             $violation->keterangan = 'on';
             $violation->save();
@@ -67,7 +68,7 @@ class PresentController extends Controller
         //Create Presence
         $presence = new User_Presence();
         $presence->user_id = $user->id;
-        $presence->checkin = Carbon::now();
+        $presence->nama =$user->nama;        $presence->checkin = Carbon::now();
 
         // Change Qrcode Use to TRUE
         // $qrcode->used = true;
@@ -148,7 +149,7 @@ class PresentController extends Controller
 
         foreach ($shows as $show) {
             $data[] = [
-                'name' => $show->user->nama,
+                'name' => $show->nama,
                 'checkin' => $show->checkin,
                 'checkout' => $show->checkout,
                 'presentId' => $show->id
