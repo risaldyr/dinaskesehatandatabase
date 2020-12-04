@@ -48,6 +48,30 @@ class UserController extends Controller
 
     }
 
+    public function changePassword(Request $request, $id)
+    {
+        $user = User::find($id);
+
+        $this->validate($request,[
+            'password'=>'required|min:6'
+        ]);
+
+        $user->password = Hash::make($request->password);
+        if($user->save()){
+            return response()->json([
+                'success' => true,
+                'message' => 'Mengganti Password Berhasil!',
+                'data' => $user
+            ], 201);
+        } else {
+            return response()->json([
+                'success' => false,
+                'message' => 'Mengganti Password Gagal!',
+                'data' => $user
+            ], 404);
+        }
+    }
+
     public function allshow()
     {
         return response()->json(User::all());
