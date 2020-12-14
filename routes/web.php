@@ -29,10 +29,12 @@ $router->group(['prefix' => 'api'], function () use ($router) {
 $router->group(['middleware' => ['auth', 'role:admin']], function () use ($router) {
     $router->get('/users', 'UserController@allshow');
     $router->get('/user/{id}', 'UserController@oneshow');
+    $router->patch('/user/{id}/changepassword', 'UserController@ChangePassword');
     $router->delete('/user/{id}', 'UserController@deleteUser');
     $router->patch('/user/{id}/gantipassword', 'UserController@changePassword');
     $router->get('/user/{id}/task', 'TaskController@showTaskUser');
     $router->get('/task', 'TaskController@showAllTask');
+    $router->get('/absent', 'PresentController@index');
     $router->get('/user/absent/{id}', 'PresentController@listPresentUser');
     $router->get('/presences', 'PresentController@index');
     $router->patch('/user/violation/{id}', 'ViolationController@violationOff');
@@ -40,12 +42,12 @@ $router->group(['middleware' => ['auth', 'role:admin']], function () use ($route
     $router->get('/violation/{id}', 'ViolationController@showViolationsUser');
 });
 
-;
+
+
 
 // User Route
 $router->group(['middleware' => ['auth', 'rolemember:user']], function () use ($router) {
     $router->post('/user/createtask', 'TaskController@createTask');
-    $router->get('/absent', 'PresentController@index');
     $router->post('/absent/checkin', 'PresentController@checkin');
     $router->patch('/absent/checkout', 'PresentController@checkout');
 });

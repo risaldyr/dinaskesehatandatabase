@@ -123,7 +123,14 @@ class PresentController extends Controller
         ])->first();
 
 
-
+        // Check Violation
+        $violation_check = $user->violations;
+        if ($violation_check->count() > 0) {
+            if ($violation_check->last()->keterangan == 'on') {
+                // Gagal
+                return response()->json('Gagal Checkin mohon ke admin', 403);
+            }
+        }
         //mengubah checkout
 
         $presence->checkout = Carbon::now();
