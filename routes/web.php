@@ -54,6 +54,6 @@ $router->group(['middleware' => ['auth', 'rolemember:user']], function () use ($
 
 
 // host route
-$router->group(['middleware' => ['auth', 'rolemember:host']], function () use ($router) {
+$router->group(['middleware' => ['auth', 'roleuser:host']], function () use ($router) {
     $router->get('/qrcode', 'HostController@showQrcode');
 });
