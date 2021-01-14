@@ -79,7 +79,8 @@ $app->configure('app');
 $app->routeMiddleware([
     'auth' => App\Http\Middleware\Authenticate::class,
     'role' => App\Http\Middleware\Role::class,
-    'rolemember' => App\Http\Middleware\RoleMember::class
+    'rolemember' => App\Http\Middleware\RoleMember::class,
+    'roleuser' => App\Http\Middleware\RoleUser::class
 
 ]);
 
